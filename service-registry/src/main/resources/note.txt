@@ -1,0 +1,10 @@
+#Spring Cloud Config Server exposes the following REST endpoints
+/{application}/{profile}[/{label}]
+/{application}-{profile}.yml
+/{label}/{application}-{profile}.yml
+/{application}-{profile}.properties
+/{label}/{application}-{profile}.properties
+
+{application} refers to value of spring.config.name property
+{profile}     is an active profile
+{label}       is an optional git label (defaults to “master”)
