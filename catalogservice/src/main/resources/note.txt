@@ -1,0 +1,1 @@
+#Access the actuator endpoint http://localhost:8181/env to see all the configuration properties.
