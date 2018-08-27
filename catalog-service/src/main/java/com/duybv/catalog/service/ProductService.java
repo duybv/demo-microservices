@@ -7,8 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.duybv.catalog.entity.Product;
-import com.duybv.catalog.repo.ProductRepository;
+import com.duybv.catalog.clients.InventoryServiceClient;
+import com.duybv.catalog.entities.Product;
+import com.duybv.catalog.model.ProductInventoryResponse;
+import com.duybv.catalog.repositories.ProductRepository;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -21,19 +23,34 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class ProductService {
 
-  private final ProductRepository productRepository;
-
   @Autowired
-  public ProductService(ProductRepository productRepository) {
-    this.productRepository = productRepository;
-  }
+  private ProductRepository productRepository;
+  
+  @Autowired
+  private InventoryServiceClient inventoryServiceClient;
 
   public List<Product> findAllProducts() {
     return productRepository.findAll();
   }
 
   public Optional<Product> findProductByCode(String code) {
-    return productRepository.findByCode(code);
+    Optional<Product> productOptional = productRepository.findByCode(code);
+    
+    if(!productOptional.isPresent()) {
+      log.info("Not found product has code: " + code);
+      return Optional.empty();
+    }
+
+    log.info("Fetching inventory level for product_code: " + code);
+
+    Optional<ProductInventoryResponse> productInventoryOptional = inventoryServiceClient.getProductInventoryByCode(code);
+
+    Integer quantity = productInventoryOptional.get().getAvailableQuantity();
+    log.info("Available quantity: " + quantity);
+    
+    productOptional.get().setInStock(quantity > 0);
+
+    return productOptional;
   }
 
 }

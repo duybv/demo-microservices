@@ -1,10 +1,10 @@
-package com.duybv.catalog.repo;
+package com.duybv.catalog.repositories;
 
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.duybv.catalog.entity.Product;
+import com.duybv.catalog.entities.Product;
 
 /**
  *  Author : duy.bui

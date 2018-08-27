@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.duybv.catalog.entity.Product;
+import com.duybv.catalog.entities.Product;
 import com.duybv.catalog.exception.ProductNotFoundException;
 import com.duybv.catalog.service.ProductService;
 
@@ -17,7 +17,7 @@ import com.duybv.catalog.service.ProductService;
  * Aug 26, 2018
  */
 @RestController
-@RequestMapping("/api/products")
+@RequestMapping("/products")
 public class ProductController {
 
   private final ProductService productService;

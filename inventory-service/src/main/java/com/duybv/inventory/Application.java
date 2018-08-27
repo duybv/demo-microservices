@@ -1,12 +1,12 @@
-package com.duybv.catalog;
+package com.duybv.inventory;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class CatalogserviceApplication {
+public class Application {
 
 	public static void main(String[] args) {
-		SpringApplication.run(CatalogserviceApplication.class, args);
+		SpringApplication.run(Application.class, args);
 	}
 }
