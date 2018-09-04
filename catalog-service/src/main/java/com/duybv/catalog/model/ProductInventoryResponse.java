@@ -3,7 +3,6 @@
  **************************************************************************/
 package com.duybv.catalog.model;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 
 /**
@@ -11,8 +10,20 @@ import lombok.Data;
  * Aug 27, 2018
  */
 @Data
-@AllArgsConstructor
 public class ProductInventoryResponse {
-    private String productCode;
-    private int availableQuantity;
+
+  private String productCode;
+  private int availableQuantity;
+
+  private ProductInventoryResponse() {}
+
+  private ProductInventoryResponse(String productCode, int availableQuantity) {
+    this.productCode = productCode;
+    this.availableQuantity = availableQuantity;
+  }
+
+  public static ProductInventoryResponse of(String productCode, int availableQuantity) {
+    return new ProductInventoryResponse(productCode, availableQuantity);
+  }
+  
 }

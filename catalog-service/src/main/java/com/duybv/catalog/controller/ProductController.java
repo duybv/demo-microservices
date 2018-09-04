@@ -20,22 +20,18 @@ import com.duybv.catalog.service.ProductService;
 @RequestMapping("/products")
 public class ProductController {
 
-  private final ProductService productService;
-
   @Autowired
-  public ProductController(ProductService productService) {
-    this.productService = productService;
-  }
+  private ProductService productService;
 
   @GetMapping("")
-  public List<Product> allProducts() {
-    return productService.findAllProducts();
+  public List<Product> findAll() {
+    return productService.findAll();
   }
 
   @GetMapping("/{code}")
-  public Product productByCode(@PathVariable String code) {
-    return productService.findProductByCode(code)
+  public Product findByCode(@PathVariable String code) {
+    return productService.findByCode(code)
         .orElseThrow(() -> new ProductNotFoundException("Product with code ["+code+"] doesn't exist"));
   }
-  
+
 }

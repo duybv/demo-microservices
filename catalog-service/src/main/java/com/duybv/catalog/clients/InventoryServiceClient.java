@@ -36,7 +36,8 @@ public class InventoryServiceClient {
 
   @HystrixCommand(fallbackMethod = "getDefaultProductInventoryByCode",
       commandProperties = {
-          @HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds", value = "3000"),
+          @HystrixProperty(name = "execution.isolation.strategy", value="SEMAPHORE"),
+          @HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds", value = "30000"),
           @HystrixProperty(name = "circuitBreaker.errorThresholdPercentage", value="60")
   })
   //@HystrixCommand(commandKey = "inventory-by-productcode", fallbackMethod = "getDefaultProductInventoryByCode")
@@ -57,7 +58,7 @@ public class InventoryServiceClient {
 
   Optional<ProductInventoryResponse> getDefaultProductInventoryByCode(String productCode) {
     log.info("Returning default ProductInventoryByCode for productCode: " + productCode + " - availableQuantity: " + defaultAvailableQuantity);
-    return Optional.of(new ProductInventoryResponse(productCode, defaultAvailableQuantity));
+    return Optional.of(ProductInventoryResponse.of(productCode, defaultAvailableQuantity));
   }
 
   private boolean isStatusOk(HttpStatus httpStatus) {
